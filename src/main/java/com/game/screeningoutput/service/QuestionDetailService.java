@@ -11,7 +11,7 @@ public interface QuestionDetailService  {
     public void add(QuestionDetail questionDetail);
     List<QuestionDetail> selectAll();
     QuestionDetail select(String questionId);
-    List<QuestionDetail> findByCategoryId(String categoryId);
+    List<QuestionDetail> findByCategory(String categoryName);
 
 
 }

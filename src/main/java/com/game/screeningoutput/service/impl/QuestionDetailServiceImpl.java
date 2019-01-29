@@ -38,7 +38,8 @@ questionDetailRepository.save(questionDetail);
     }
 
     @Override
-    public List<QuestionDetail> findByCategoryId(String categoryId) {
-        return null;
+    public List<QuestionDetail> findByCategory(String categoryName) {
+
+        return questionDetailRepository.findByCategory(categoryName);
     }
 }

@@ -1,24 +1,20 @@
 package com.game.screeningoutput.dto;
 
-import java.util.List;
-
 public class QuestionDetailDTO {
 
 
     private String questionId;
     private String name;
     private String content;
-//    private List<OptionDTO> optionDTOList;
-//    private List<OptionDTO> correctDTOList;
-    private String optionList;
-    private String correctOptionList;
+    private String correctAnswer;
     private String category;
     private String mediaType;
+
     private String ansType;
     private String difficulty;
     private int duration;
 
-
+private String optionList;
     public String getQuestionId() {
         return questionId;
     }
@@ -51,12 +47,12 @@ public class QuestionDetailDTO {
         this.optionList = optionList;
     }
 
-    public String getCorrectOptionList() {
-        return correctOptionList;
+    public String getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setCorrectOptionList(String correctOptionList) {
-        this.correctOptionList = correctOptionList;
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 
     public String getCategory() {

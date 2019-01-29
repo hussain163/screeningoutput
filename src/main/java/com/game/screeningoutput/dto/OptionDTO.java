@@ -7,6 +7,15 @@ public class OptionDTO {
     private String questionId;
     private String optionId;
     private String optionContent;
+    private boolean isCorrect;
+
+    public boolean isCorrect() {
+        return isCorrect;
+    }
+
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
 
     public String getQuestionId() {
         return questionId;

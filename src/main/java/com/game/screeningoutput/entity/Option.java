@@ -3,6 +3,8 @@ package com.game.screeningoutput.entity;
 
 
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 
@@ -10,15 +12,27 @@ import javax.persistence.*;
 @Embeddable
 public class Option {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String optionId;
     private String questionId;
     private String optionContent;
+    private boolean isCorrect;
 
+    public boolean isCorrect() {
+        return isCorrect;
+    }
 
-    public Option(String questionId, String optionContent) {
+    public void setCorrect(boolean correct) {
+        isCorrect = correct;
+    }
+
+    public Option(){}
+
+    public Option(String questionId, String optionContent, boolean isCorrect) {
         this.questionId = questionId;
         this.optionContent = optionContent;
+        this.isCorrect = isCorrect;
     }
 
     public String getQuestionId() {

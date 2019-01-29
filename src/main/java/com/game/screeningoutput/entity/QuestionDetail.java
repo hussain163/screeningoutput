@@ -4,8 +4,6 @@ package com.game.screeningoutput.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Entity
@@ -15,13 +13,12 @@ public class QuestionDetail {
     public static final String TABLE_NAME = "QUESTION_DETAIL";
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+//    @GeneratedValue(generator = "uuid")
+//    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String questionId;
     private String name;
     private String content;
- //   private ArrayList<Option> optionList;
-  //  private ArrayList<Option> correctList;
+    // private String correctAnswer;
     private String category;
     private String mediaType;
     private String ansType;
@@ -93,8 +90,6 @@ public class QuestionDetail {
     public void setDuration(int duration) {
         this.duration = duration;
     }
-
-
 
 }
 

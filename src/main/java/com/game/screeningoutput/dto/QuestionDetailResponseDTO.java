@@ -7,10 +7,7 @@ public class QuestionDetailResponseDTO {
     private String questionId;
     private String name;
     private String content;
-        private List<OptionDTO> optionDTOList;
-    private List<OptionDTO> correctDTOList;
-//    private String optionList;
-//    private String correctOptionList;
+    private List<OptionDTO> optionDTOList;
     private String category;
     private String mediaType;
     private String ansType;
@@ -50,13 +47,7 @@ public class QuestionDetailResponseDTO {
         this.optionDTOList = optionDTOList;
     }
 
-    public List<OptionDTO> getCorrectDTOList() {
-        return correctDTOList;
-    }
 
-    public void setCorrectDTOList(List<OptionDTO> correctDTOList) {
-        this.correctDTOList = correctDTOList;
-    }
 
     public String getCategory() {
         return category;
