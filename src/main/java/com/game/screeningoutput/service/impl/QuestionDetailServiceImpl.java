@@ -9,26 +9,22 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 @Transactional(readOnly = true,propagation = Propagation.REQUIRES_NEW)
 public class QuestionDetailServiceImpl implements QuestionDetailService {
 
-@Autowired
+    @Autowired
     QuestionDetailRepository questionDetailRepository;
-
-
 
     @Override
     @Transactional(readOnly = false)
     public void add(QuestionDetail questionDetail) {
-questionDetailRepository.save(questionDetail);
+        questionDetailRepository.save(questionDetail);
     }
 
     @Override
     public List<QuestionDetail> selectAll() {
-
-
-
         return (List<QuestionDetail>) questionDetailRepository.findAll();
     }
 
@@ -38,8 +34,17 @@ questionDetailRepository.save(questionDetail);
     }
 
     @Override
-    public List<QuestionDetail> findByCategory(String categoryName) {
+    public List<QuestionDetail> findByQuestionCategory(String categoryName) {
+        return questionDetailRepository.findByQuestionCategory(categoryName);
+    }
 
-        return questionDetailRepository.findByCategory(categoryName);
+    @Override
+    public List<QuestionDetail> findByQuestionType(String mediaType) {
+        return questionDetailRepository.findByQuestionType(mediaType);
+    }
+
+    @Override
+    public List<QuestionDetail> findByQuestionTypeAndQuestionCategory(String questionType, String questionCategory) {
+        return questionDetailRepository.findQuestionDetailByQuestionCategoryAndQuestionType(questionCategory, questionType);
     }
 }

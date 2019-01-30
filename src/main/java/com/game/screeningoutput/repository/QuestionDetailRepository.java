@@ -11,6 +11,10 @@ import java.util.List;
 public interface QuestionDetailRepository extends CrudRepository<QuestionDetail,String> {
 
 
-    List<QuestionDetail> findByCategory(String categoryName);
+    List<QuestionDetail> findByQuestionCategory(String questionCategoryName);
+
+    List<QuestionDetail> findByQuestionType(String questionType);
+
+    List<QuestionDetail> findQuestionDetailByQuestionCategoryAndQuestionType(String questionCategory, String questionType);
 
 }

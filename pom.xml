@@ -11,7 +11,7 @@
 	<groupId>com.game</groupId>
 	<artifactId>screeningoutput</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>screeningoutput</name>
+	<questionName>screeningoutput</questionName>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
