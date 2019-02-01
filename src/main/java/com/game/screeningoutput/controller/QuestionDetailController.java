@@ -29,41 +29,43 @@ public class QuestionDetailController {
     @Autowired
     OptionServiceInterface optionServiceInterface;
 
+
     @PostMapping(value = "/addQuestion")
     void add(@RequestBody QuestionDetailDTO questionDetailDTO) {
         QuestionDetail questionDetail = new QuestionDetail();
         BeanUtils.copyProperties(questionDetailDTO, questionDetail);
-        String options = questionDetailDTO.getAnswerOptions();
-        String optionList[] = options.split(",");
-        if(questionDetailDTO.getQuestionDifficulty().equals("Hard"))
-            questionDetail.setDuration(120);
-        else if(questionDetailDTO.getQuestionDifficulty().equals("Medium"))
-            questionDetail.setDuration(60);
-        else if(questionDetailDTO.getQuestionDifficulty().equals("Easy"))
-            questionDetail.setDuration(45);
+
+//        String options = questionDetailDTO.getAnswerOptions();
+//        String optionList[] = options.split(";");
+//        if(questionDetailDTO.getQuestionDifficulty().equals("Hard"))
+//            questionDetail.setDuration(120);
+//        else if(questionDetailDTO.getQuestionDifficulty().equals("Medium"))
+//            questionDetail.setDuration(60);
+//        else if(questionDetailDTO.getQuestionDifficulty().equals("Easy"))
+//            questionDetail.setDuration(45);
+//
+//
+//        questionDetailService.add(questionDetail);
+//
+//        String[] correctAns = questionDetailDTO.getCorrectAnswer().split(";");
+//        for (String op : optionList) {
+//            int flag = 0;
+//            for (String ca : correctAns) {
+//                if (ca.equals(op)) {
+//                    flag = 1;
+//                    optionServiceInterface.add(new Option(questionDetail.getQuestionId(), op, true));
+//                }
+//            }
+//            if (flag == 0) {
+//                optionServiceInterface.add(new Option(questionDetail.getQuestionId(), op, false));
+//            }
+//        }
+
+        //Delete from mongodb
+        questionDetailService.deleteFromMongoDB(questionDetailDTO.getQuestionId());
 
 
-        questionDetailService.add(questionDetail);
 
-        String[] correctAns = questionDetailDTO.getCorrectAnswer().split(",");
-        for (String op : optionList) {
-            int flag = 0;
-            for (String ca : correctAns) {
-                if (ca.equals(op)) {
-                    flag = 1;
-                    optionServiceInterface.add(new Option(questionDetail.getQuestionId(), op, true));
-                }
-            }
-            if (flag == 0) {
-                optionServiceInterface.add(new Option(questionDetail.getQuestionId(), op, false));
-            }
-        }
-
-     //   Delete from mongodb
-        RestTemplate restTemplate = new RestTemplate();
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:8000/screening/deleteByQuestionId")
-                .queryParam("questionId", questionDetailDTO.getQuestionId());
-        restTemplate.delete(builder.toUriString());
 
     }
 
@@ -166,8 +168,8 @@ public class QuestionDetailController {
 
     @GetMapping(value = "{questionCategory}/getByQuestionType/{questionType}")
     public List<QuestionDetailResponseDTO> getByCategoryAndType(@PathVariable("questionCategory") String questioncategory, @PathVariable("questionType") String questionType) {
-        List<QuestionDetailResponseDTO> questionDetailResponseDTOS = new ArrayList<>();
 
+        List<QuestionDetailResponseDTO> questionDetailResponseDTOS = new ArrayList<>();
         List<QuestionDetail> questionDetails = questionDetailService.findByQuestionTypeAndQuestionCategory(questionType, questioncategory);
 
         for (QuestionDetail questionDetail : questionDetails) {
@@ -189,32 +191,39 @@ public class QuestionDetailController {
     }
 
 
+
+
+
     @PostMapping(value = "/checkAnswer")
     public boolean checkAnswer(@RequestBody CheckAnswerDTO checkAnswerDTO) {
-        String[] userAnswer = checkAnswerDTO.getUserAnswer().split(",");
-        List<Option> optionList = optionServiceInterface.getByQuestionId(checkAnswerDTO.getQuestionId());
-        int count = 0;
-        for (Option op : optionList) {
-            if (op.isCorrect())
-                count++;
-        }
-        if (userAnswer.length != count) {
-            return false;
-        }
-        for (Option op : optionList) {
-            if (op.isCorrect()) {
-                for (String ua : userAnswer) {
-                    if (ua.equals(op.getOptionId())) {
-                        count--;
-                        break;
-                    }
-                }
-                if (count == 0) {
-                    return true;
-                }
-            }
-        }
-        return false;
+
+        return questionDetailService.checkAnswer(checkAnswerDTO.getUserAnswer().split(","), optionServiceInterface.getByQuestionId(checkAnswerDTO.getQuestionId()));
+
+//        String[] userAnswer = checkAnswerDTO.getUserAnswer().split(",");
+//        List<Option> optionList = optionServiceInterface.getByQuestionId(checkAnswerDTO.getQuestionId());
+//        int count = 0;
+//        for (Option op : optionList) {
+//            if (op.isCorrect())
+//                count++;
+//        }
+//        if (userAnswer.length != count) {
+//            return false;
+//        }
+//        for (Option op : optionList) {
+//            if (op.isCorrect()) {
+//                for (String ua : userAnswer) {
+//                    if (ua.equals(op.getOptionId())) {
+//                        count--;
+//                        break;
+//                    }
+//                }
+//                if (count == 0) {
+//                    return true;
+//                }
+//            }
+//        }
+//        return false;
+
     }
 
 
